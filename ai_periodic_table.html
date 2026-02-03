@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodic Table of AI Technologies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .search-box {
+            padding: 12px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 14px;
+            width: 300px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .filter-btn.active {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            justify-content: center;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .element {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+            min-height: 90px;
+        }
+
+        .element:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .element-number {
+            font-size: 10px;
+            font-weight: bold;
+            opacity: 0.7;
+            position: absolute;
+            top: 4px;
+            left: 6px;
+        }
+
+        .element-symbol {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 4px 0;
+        }
+
+        .element-name {
+            font-size: 9px;
+            opacity: 0.8;
+            line-height: 1.2;
+        }
+
+        /* Category Colors */
+        .models { background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: white; }
+        .techniques { background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; }
+        .architectures { background: linear-gradient(135deg, #f7b731, #f79f1f); color: white; }
+        .training { background: linear-gradient(135deg, #5f27cd, #341f97); color: white; }
+        .applications { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: white; }
+        .tools { background: linear-gradient(135deg, #fa8231, #f77737); color: white; }
+        .metrics { background: linear-gradient(135deg, #38ef7d, #11998e); color: white; }
+        .concepts { background: linear-gradient(135deg, #e94057, #8a2387); color: white; }
+
+        .empty {
+            background: transparent;
+            border: none;
+            cursor: default;
+        }
+
+        .empty:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #718096;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #2d3748;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 2em;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .modal-category {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section h3 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .modal-section p, .modal-section ul {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+        }
+
+        .modal-section li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 1200px) {
+            .periodic-table {
+                grid-template-columns: repeat(12, 1fr);
+            }
+            
+            .element-symbol {
+                font-size: 14px;
+            }
+            
+            .element-name {
+                font-size: 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .periodic-table {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚛️ Periodic Table of AI Technologies</h1>
+        <p class="subtitle">Explore the fundamental elements of Artificial Intelligence</p>
+        
+        <div class="controls">
+            <input type="text" class="search-box" id="searchBox" placeholder="Search AI technologies...">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="models">Models</button>
+            <button class="filter-btn" data-filter="techniques">Techniques</button>
+            <button class="filter-btn" data-filter="architectures">Architectures</button>
+            <button class="filter-btn" data-filter="training">Training</button>
+            <button class="filter-btn" data-filter="applications">Applications</button>
+            <button class="filter-btn" data-filter="tools">Tools</button>
+            <button class="filter-btn" data-filter="metrics">Metrics</button>
+            <button class="filter-btn" data-filter="concepts">Concepts</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color models"></div>
+                <span>Foundation Models</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color techniques"></div>
+                <span>AI Techniques</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color architectures"></div>
+                <span>Architectures</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color training"></div>
+                <span>Training Methods</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color applications"></div>
+                <span>Applications</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color tools"></div>
+                <span>Tools & Frameworks</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color metrics"></div>
+                <span>Evaluation Metrics</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color concepts"></div>
+                <span>Core Concepts</span>
+            </div>
+        </div>
+
+        <div class="periodic-table" id="periodicTable"></div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <span class="modal-category" id="modalCategory"></span>
+            </div>
+            <div class="modal-section">
+                <h3>Definition</h3>
+                <p id="modalDefinition"></p>
+            </div>
+            <div class="modal-section">
+                <h3>Use Cases</h3>
+                <p id="modalUseCases"></p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Features</h3>
+                <ul id="modalFeatures"></ul>
+            </div>
+            <div class="modal-section">
+                <h3>Related Concepts</h3>
+                <p id="modalRelated"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const aiElements = [
+            // Foundation Models (Row 1)
+            { number: 1, symbol: 'GPT', name: 'GPT Models', category: 'models', row: 1, col: 1, 
+              definition: 'Generative Pre-trained Transformer models developed by OpenAI, capable of understanding and generating human-like text.',
+              useCases: 'Content creation, coding assistance, conversational AI, text summarization, translation, and question answering.',
+              features: ['Autoregressive text generation', 'Large-scale pre-training', 'Few-shot learning capabilities', 'Versatile across multiple tasks'],
+              related: 'Transformers, LLMs, Fine-tuning, Prompt Engineering' },
+            
+            { number: 2, symbol: 'BERT', name: 'BERT', category: 'models', row: 1, col: 2,
+              definition: 'Bidirectional Encoder Representations from Transformers by Google, designed to understand context from both directions.',
+              useCases: 'Search engines, sentiment analysis, named entity recognition, question answering systems.',
+              features: ['Bidirectional context understanding', 'Masked language modeling', 'Pre-training and fine-tuning approach', 'Excellent for classification tasks'],
+              related: 'Transformers, NLP, Embeddings, Transfer Learning' },
+            
+            { number: 3, symbol: 'T5', name: 'T5 Model', category: 'models', row: 1, col: 3,
+              definition: 'Text-to-Text Transfer Transformer treats every NLP task as a text generation problem.',
+              useCases: 'Translation, summarization, classification reformulated as generation tasks.',
+              features: ['Unified text-to-text framework', 'Flexible task handling', 'Transfer learning', 'Scalable architecture'],
+              related: 'Transformers, Seq2Seq, Transfer Learning' },
+            
+            { number: 4, symbol: 'Claude', name: 'Claude AI', category: 'models', row: 1, col: 4,
+              definition: 'Constitutional AI assistant by Anthropic, designed to be helpful, harmless, and honest.',
+              useCases: 'Conversational AI, coding, analysis, creative writing, research assistance.',
+              features: ['Constitutional AI training', 'Extended context windows', 'Strong reasoning capabilities', 'Safety-focused design'],
+              related: 'LLMs, RLHF, Constitutional AI, Safety' },
+            
+            { number: 5, symbol: 'LLaMA', name: 'LLaMA', category: 'models', row: 1, col: 5,
+              definition: 'Large Language Model Meta AI, open-source foundation models by Meta.',
+              useCases: 'Research, custom model development, open-source AI applications.',
+              features: ['Open-source availability', 'Efficient parameter scaling', 'Research-friendly', 'Community-driven development'],
+              related: 'Open Source, LLMs, Fine-tuning' },
+
+            { number: 6, symbol: 'Gem', name: 'Gemini', category: 'models', row: 1, col: 6,
+              definition: 'Multimodal AI model by Google that can process text, images, audio, and video.',
+              useCases: 'Multimodal understanding, complex reasoning, code generation, visual question answering.',
+              features: ['Multimodal processing', 'Advanced reasoning', 'Native code understanding', 'Long context handling'],
+              related: 'Multimodal AI, LLMs, Vision-Language Models' },
+
+            // AI Techniques (Row 2)
+            { number: 7, symbol: 'RAG', name: 'Retrieval Augmented', category: 'techniques', row: 2, col: 1,
+              definition: 'Retrieval-Augmented Generation combines language models with external knowledge retrieval for more accurate responses.',
+              useCases: 'Question answering with current data, document search, knowledge-intensive tasks, reducing hallucinations.',
+              features: ['External knowledge integration', 'Reduced hallucinations', 'Up-to-date information access', 'Scalable knowledge base'],
+              related: 'Embeddings, Vector Databases, LLMs, Semantic Search' },
+            
+            { number: 8, symbol: 'CoT', name: 'Chain of Thought', category: 'techniques', row: 2, col: 2,
+              definition: 'Prompting technique that encourages models to show step-by-step reasoning before answering.',
+              useCases: 'Complex problem solving, mathematical reasoning, multi-step tasks, improving accuracy.',
+              features: ['Step-by-step reasoning', 'Improved accuracy on complex tasks', 'Transparent thought process', 'Better error detection'],
+              related: 'Prompt Engineering, Reasoning, Few-shot Learning' },
+            
+            { number: 9, symbol: 'FT', name: 'Fine-tuning', category: 'techniques', row: 2, col: 3,
+              definition: 'Training a pre-trained model on specific data to adapt it for particular tasks or domains.',
+              useCases: 'Domain adaptation, task-specific optimization, custom AI applications.',
+              features: ['Transfer learning', 'Task specialization', 'Efficient training', 'Performance improvement'],
+              related: 'Transfer Learning, PEFT, LoRA, Training' },
+            
+            { number: 10, symbol: 'FSL', name: 'Few-shot Learning', category: 'techniques', row: 2, col: 4,
+              definition: 'Learning approach where models perform tasks with only a few examples provided in the prompt.',
+              useCases: 'Rapid task adaptation, low-data scenarios, prompt-based learning.',
+              features: ['Minimal training data needed', 'In-context learning', 'Flexible task adaptation', 'Cost-effective'],
+              related: 'Prompt Engineering, In-context Learning, Meta-learning' },
+            
+            { number: 11, symbol: 'ZSL', name: 'Zero-shot Learning', category: 'techniques', row: 2, col: 5,
+              definition: 'Ability of models to perform tasks without any specific examples, relying only on instructions.',
+              useCases: 'Novel task execution, generalization, instruction following.',
+              features: ['No examples needed', 'Strong generalization', 'Instruction-based', 'Versatile application'],
+              related: 'Prompt Engineering, Transfer Learning, Generalization' },
+
+            { number: 12, symbol: 'PE', name: 'Prompt Engineering', category: 'techniques', row: 2, col: 6,
+              definition: 'The art and science of crafting effective prompts to get desired outputs from AI models.',
+              useCases: 'Optimizing model responses, task-specific instructions, improving output quality.',
+              features: ['No model retraining needed', 'Immediate results', 'Iterative refinement', 'Cost-effective optimization'],
+              related: 'CoT, Few-shot, Zero-shot, System Prompts' },
+
+            // Architectures (Row 3)
+            { number: 13, symbol: 'Tfm', name: 'Transformers', category: 'architectures', row: 3, col: 1,
+              definition: 'Neural network architecture using self-attention mechanisms, foundation of modern NLP.',
+              useCases: 'Language models, translation, text generation, sequence processing.',
+              features: ['Self-attention mechanism', 'Parallel processing', 'Long-range dependencies', 'Scalable architecture'],
+              related: 'Attention, BERT, GPT, Encoder-Decoder' },
+            
+            { number: 14, symbol: 'CNN', name: 'Conv. Networks', category: 'architectures', row: 3, col: 2,
+              definition: 'Convolutional Neural Networks specialized for processing grid-like data such as images.',
+              useCases: 'Image classification, object detection, facial recognition, medical imaging.',
+              features: ['Spatial hierarchy learning', 'Parameter sharing', 'Translation invariance', 'Feature extraction'],
+              related: 'Computer Vision, Deep Learning, ResNet, VGG' },
+            
+            { number: 15, symbol: 'RNN', name: 'Recurrent Networks', category: 'architectures', row: 3, col: 3,
+              definition: 'Networks with loops allowing information persistence, designed for sequential data.',
+              useCases: 'Time series analysis, speech recognition, language modeling.',
+              features: ['Sequential processing', 'Memory of previous inputs', 'Variable-length sequences', 'Temporal dependencies'],
+              related: 'LSTM, GRU, Sequence Modeling, Time Series' },
+            
+            { number: 16, symbol: 'GAN', name: 'Generative Adv. Networks', category: 'architectures', row: 3, col: 4,
+              definition: 'Two neural networks competing: generator creates data, discriminator evaluates authenticity.',
+              useCases: 'Image generation, data augmentation, style transfer, synthetic data creation.',
+              features: ['Adversarial training', 'High-quality generation', 'Unsupervised learning', 'Creative applications'],
+              related: 'Generative Models, Computer Vision, StyleGAN' },
+            
+            { number: 17, symbol: 'DM', name: 'Diffusion Models', category: 'architectures', row: 3, col: 5,
+              definition: 'Generative models that learn to reverse a gradual noising process to create data.',
+              useCases: 'Image generation (Stable Diffusion, DALL-E), audio synthesis, video generation.',
+              features: ['High-quality outputs', 'Stable training', 'Controllable generation', 'State-of-the-art results'],
+              related: 'Generative AI, Image Synthesis, DALL-E, Midjourney' },
+
+            { number: 18, symbol: 'AE', name: 'Autoencoders', category: 'architectures', row: 3, col: 6,
+              definition: 'Neural networks that learn compressed representations of data through encoding and decoding.',
+              useCases: 'Dimensionality reduction, anomaly detection, denoising, feature learning.',
+              features: ['Unsupervised learning', 'Compression', 'Reconstruction', 'Feature extraction'],
+              related: 'VAE, Embeddings, Dimensionality Reduction' },
+
+            // Training Methods (Row 4)
+            { number: 19, symbol: 'SL', name: 'Supervised Learning', category: 'training', row: 4, col: 1,
+              definition: 'Learning from labeled data where the model learns to map inputs to known outputs.',
+              useCases: 'Classification, regression, prediction tasks with labeled datasets.',
+              features: ['Labeled training data', 'Clear objectives', 'Direct feedback', 'High accuracy potential'],
+              related: 'Classification, Regression, Labels, Training Data' },
+            
+            { number: 20, symbol: 'UL', name: 'Unsupervised Learning', category: 'training', row: 4, col: 2,
+              definition: 'Learning patterns from unlabeled data without explicit supervision.',
+              useCases: 'Clustering, dimensionality reduction, pattern discovery, anomaly detection.',
+              features: ['No labels needed', 'Pattern discovery', 'Data exploration', 'Cost-effective'],
+              related: 'Clustering, PCA, K-means, Self-supervised' },
+            
+            { number: 21, symbol: 'RL', name: 'Reinforcement Learning', category: 'training', row: 4, col: 3,
+              definition: 'Learning through interaction with environment, receiving rewards or penalties for actions.',
+              useCases: 'Game playing, robotics, autonomous systems, optimization problems.',
+              features: ['Reward-based learning', 'Sequential decision making', 'Exploration vs exploitation', 'Long-term optimization'],
+              related: 'RLHF, Policy Gradient, Q-Learning, Agent' },
+            
+            { number: 22, symbol: 'TL', name: 'Transfer Learning', category: 'training', row: 4, col: 4,
+              definition: 'Applying knowledge learned from one task to improve learning on a related task.',
+              useCases: 'Domain adaptation, few-shot learning, pre-training and fine-tuning.',
+              features: ['Leverages pre-trained models', 'Faster training', 'Less data needed', 'Improved performance'],
+              related: 'Fine-tuning, Pre-training, Domain Adaptation' },
+            
+            { number: 23, symbol: 'SSL', name: 'Self-supervised', category: 'training', row: 4, col: 5,
+              definition: 'Learning representations from unlabeled data by creating pseudo-labels from the data itself.',
+              useCases: 'Pre-training language models, vision models, representation learning.',
+              features: ['No manual labels', 'Scalable', 'Rich representations', 'Foundation model training'],
+              related: 'Pre-training, Masked Language Modeling, Contrastive Learning' },
+
+            { number: 24, symbol: 'RLHF', name: 'RL Human Feedback', category: 'training', row: 4, col: 6,
+              definition: 'Reinforcement Learning from Human Feedback aligns AI behavior with human preferences.',
+              useCases: 'Aligning language models, improving response quality, safety training.',
+              features: ['Human preference learning', 'Safety alignment', 'Quality improvement', 'Iterative refinement'],
+              related: 'Reinforcement Learning, Constitutional AI, Alignment' },
+
+            // Applications (Row 5)
+            { number: 25, symbol: 'CV', name: 'Computer Vision', category: 'applications', row: 5, col: 1,
+              definition: 'AI field enabling computers to derive meaningful information from visual inputs.',
+              useCases: 'Object detection, facial recognition, autonomous vehicles, medical imaging, surveillance.',
+              features: ['Image understanding', 'Pattern recognition', 'Real-time processing', 'Multi-task capabilities'],
+              related: 'CNN, Object Detection, Image Classification, YOLO' },
+            
+            { number: 26, symbol: 'NLP', name: 'Natural Language', category: 'applications', row: 5, col: 2,
+              definition: 'Natural Language Processing enables computers to understand, interpret, and generate human language.',
+              useCases: 'Chatbots, translation, sentiment analysis, text summarization, question answering.',
+              features: ['Text understanding', 'Language generation', 'Context awareness', 'Multilingual support'],
+              related: 'Transformers, Tokenization, Embeddings, LLMs' },
+            
+            { number: 27, symbol: 'SR', name: 'Speech Recognition', category: 'applications', row: 5, col: 3,
+              definition: 'Converting spoken language into text using AI models.',
+              useCases: 'Virtual assistants, transcription services, voice commands, accessibility tools.',
+              features: ['Audio processing', 'Real-time transcription', 'Speaker recognition', 'Noise handling'],
+              related: 'Audio Processing, Whisper, ASR, Signal Processing' },
+            
+            { number: 28, symbol: 'Rob', name: 'Robotics', category: 'applications', row: 5, col: 4,
+              definition: 'AI application in physical robots for autonomous operation and decision-making.',
+              useCases: 'Manufacturing automation, autonomous vehicles, drones, medical robots.',
+              features: ['Physical interaction', 'Real-time decisions', 'Sensor integration', 'Motion planning'],
+              related: 'Reinforcement Learning, Computer Vision, Path Planning' },
+            
+            { number: 29, symbol: 'RecS', name: 'Recommendation', category: 'applications', row: 5, col: 5,
+              definition: 'Systems that predict user preferences and suggest relevant items or content.',
+              useCases: 'E-commerce, streaming platforms, social media, content discovery.',
+              features: ['Personalization', 'Collaborative filtering', 'Content-based filtering', 'Real-time updates'],
+              related: 'Collaborative Filtering, Embeddings, Matrix Factorization' },
+
+            { number: 30, symbol: 'GenAI', name: 'Generative AI', category: 'applications', row: 5, col: 6,
+              definition: 'AI systems that can create new content including text, images, audio, and video.',
+              useCases: 'Content creation, art generation, code synthesis, drug discovery, design assistance.',
+              features: ['Creative output', 'Multimodal generation', 'Human-like quality', 'Rapid iteration'],
+              related: 'GPT, Diffusion Models, GANs, LLMs' },
+
+            // Tools & Frameworks (Row 6)
+            { number: 31, symbol: 'TF', name: 'TensorFlow', category: 'tools', row: 6, col: 1,
+              definition: 'Open-source machine learning framework by Google for building and training models.',
+              useCases: 'Model development, production deployment, research, mobile ML.',
+              features: ['Flexible architecture', 'Production-ready', 'Mobile support', 'Large ecosystem'],
+              related: 'Keras, Neural Networks, Model Training, Google' },
+            
+            { number: 32, symbol: 'PyT', name: 'PyTorch', category: 'tools', row: 6, col: 2,
+              definition: 'Open-source machine learning library by Meta, popular for research and development.',
+              useCases: 'Research, prototyping, production models, computer vision, NLP.',
+              features: ['Dynamic computation graphs', 'Pythonic interface', 'Strong GPU support', 'Research-friendly'],
+              related: 'Deep Learning, Neural Networks, Meta, Research' },
+            
+            { number: 33, symbol: 'HF', name: 'Hugging Face', category: 'tools', row: 6, col: 3,
+              definition: 'Platform providing pre-trained models, datasets, and tools for NLP and ML.',
+              useCases: 'Model sharing, fine-tuning, inference, dataset access, model deployment.',
+              features: ['Model hub', 'Easy integration', 'Community-driven', 'Pre-trained models'],
+              related: 'Transformers, Model Hub, Fine-tuning, Open Source' },
+            
+            { number: 34, symbol: 'LC', name: 'LangChain', category: 'tools', row: 6, col: 4,
+              definition: 'Framework for developing applications powered by language models with chains and agents.',
+              useCases: 'Building LLM apps, chatbots, document QA, agents, workflow automation.',
+              features: ['Chain composition', 'Agent framework', 'Memory management', 'Tool integration'],
+              related: 'LLMs, RAG, Agents, Orchestration' },
+            
+            { number: 35, symbol: 'API', name: 'OpenAI API', category: 'tools', row: 6, col: 5,
+              definition: 'API service providing access to GPT models and other AI capabilities.',
+              useCases: 'Application integration, chatbots, content generation, embeddings.',
+              features: ['Easy integration', 'Scalable', 'Multiple models', 'Well-documented'],
+              related: 'GPT, API Integration, Cloud Services, Embeddings' },
+
+            { number: 36, symbol: 'VDB', name: 'Vector DB', category: 'tools', row: 6, col: 6,
+              definition: 'Databases optimized for storing and querying high-dimensional vector embeddings.',
+              useCases: 'Semantic search, RAG systems, similarity matching, recommendation engines.',
+              features: ['Fast similarity search', 'Scalable storage', 'Optimized indexing', 'Integration-friendly'],
+              related: 'Embeddings, RAG, Semantic Search, Pinecone, Weaviate' },
+
+            // Evaluation Metrics (Row 7)
+            { number: 37, symbol: 'Acc', name: 'Accuracy', category: 'metrics', row: 7, col: 1,
+              definition: 'Proportion of correct predictions among total predictions made.',
+              useCases: 'Classification tasks, model evaluation, performance benchmarking.',
+              features: ['Simple interpretation', 'Common metric', 'Baseline measure', 'Easy calculation'],
+              related: 'Precision, Recall, F1 Score, Evaluation' },
+            
+            { number: 38, symbol: 'PPL', name: 'Perplexity', category: 'metrics', row: 7, col: 2,
+              definition: 'Measure of how well a probability model predicts a sample, common in language models.',
+              useCases: 'Language model evaluation, model comparison, training monitoring.',
+              features: ['Language model metric', 'Lower is better', 'Probability-based', 'Standard benchmark'],
+              related: 'Language Models, Cross-entropy, Evaluation, NLP' },
+            
+            { number: 39, symbol: 'BLEU', name: 'BLEU Score', category: 'metrics', row: 7, col: 3,
+              definition: 'Bilingual Evaluation Understudy measures quality of machine-translated text.',
+              useCases: 'Machine translation evaluation, text generation quality assessment.',
+              features: ['N-gram precision', 'Reference-based', 'Automated evaluation', 'Translation quality'],
+              related: 'Translation, ROUGE, Text Generation, NLP' },
+            
+            { number: 40, symbol: 'RG', name: 'ROUGE', category: 'metrics', row: 7, col: 4,
+              definition: 'Recall-Oriented Understudy for Gisting Evaluation measures summarization quality.',
+              useCases: 'Text summarization evaluation, content overlap measurement.',
+              features: ['Recall-focused', 'Reference comparison', 'Multiple variants', 'Summarization metric'],
+              related: 'Summarization, BLEU, Text Generation, Evaluation' },
+            
+            { number: 41, symbol: 'F1', name: 'F1 Score', category: 'metrics', row: 7, col: 5,
+              definition: 'Harmonic mean of precision and recall, balancing both metrics.',
+              useCases: 'Classification evaluation, imbalanced datasets, model comparison.',
+              features: ['Balanced metric', 'Handles imbalance', 'Single number summary', 'Widely used'],
+              related: 'Precision, Recall, Accuracy, Classification' },
+
+            { number: 42, symbol: 'AUC', name: 'AUC-ROC', category: 'metrics', row: 7, col: 6,
+              definition: 'Area Under the Receiver Operating Characteristic curve measures classification performance.',
+              useCases: 'Binary classification, model comparison, threshold selection.',
+              features: ['Threshold-independent', 'Probabilistic interpretation', 'Robust metric', 'Standard benchmark'],
+              related: 'Classification, Precision-Recall, ROC Curve' },
+
+            // Core Concepts (Row 8)
+            { number: 43, symbol: 'Emb', name: 'Embeddings', category: 'concepts', row: 8, col: 1,
+              definition: 'Dense vector representations that capture semantic meaning of text, images, or other data.',
+              useCases: 'Semantic search, similarity matching, RAG systems, clustering.',
+              features: ['Semantic representation', 'Fixed dimensions', 'Similarity computation', 'Transfer learning'],
+              related: 'Vector Databases, Semantic Search, RAG, NLP' },
+            
+            { number: 44, symbol: 'Tok', name: 'Tokenization', category: 'concepts', row: 8, col: 2,
+              definition: 'Process of breaking text into smaller units (tokens) for model processing.',
+              useCases: 'Text preprocessing, model input preparation, language processing.',
+              features: ['Text splitting', 'Vocabulary mapping', 'Subword units', 'Language-specific'],
+              related: 'NLP, BPE, WordPiece, Vocabulary' },
+            
+            { number: 45, symbol: 'CW', name: 'Context Window', category: 'concepts', row: 8, col: 3,
+              definition: 'Maximum amount of text a model can process at once, measured in tokens.',
+              useCases: 'Understanding model limitations, document processing, conversation management.',
+              features: ['Token limit', 'Memory constraint', 'Processing capacity', 'Model-specific'],
+              related: 'Tokens, LLMs, Memory, Attention' },
+            
+            { number: 46, symbol: 'Temp', name: 'Temperature', category: 'concepts', row: 8, col: 4,
+              definition: 'Parameter controlling randomness in model outputs; higher values increase creativity.',
+              useCases: 'Controlling output diversity, creative writing, deterministic responses.',
+              features: ['Randomness control', '0-2 range typical', 'Output diversity', 'Sampling parameter'],
+              related: 'Sampling, Top-p, Generation, Creativity' },
+            
+            { number: 47, symbol: 'Top', name: 'Top-p Sampling', category: 'concepts', row: 8, col: 5,
+              definition: 'Nucleus sampling that selects from smallest set of tokens whose cumulative probability exceeds p.',
+              useCases: 'Balancing quality and diversity, controlled generation.',
+              features: ['Dynamic vocabulary', 'Quality control', 'Diversity management', 'Alternative to temperature'],
+              related: 'Temperature, Sampling, Generation, Tokens' },
+
+            { number: 48, symbol: 'Attn', name: 'Attention Mechanism', category: 'concepts', row: 8, col: 6,
+              definition: 'Neural network mechanism that weighs the importance of different parts of input.',
+              useCases: 'Transformers, translation, focusing on relevant information.',
+              features: ['Selective focus', 'Weight assignment', 'Context understanding', 'Parallelizable'],
+              related: 'Transformers, Self-attention, Query-Key-Value' },
+
+            { number: 49, symbol: 'Hall', name: 'Hallucination', category: 'concepts', row: 8, col: 7,
+              definition: 'When AI models generate plausible-sounding but incorrect or fabricated information.',
+              useCases: 'Quality control, fact-checking, understanding model limitations.',
+              features: ['Confident errors', 'Plausible falsehoods', 'Known limitation', 'Requires mitigation'],
+              related: 'RAG, Grounding, Verification, Model Limitations' },
+
+            { number: 50, symbol: 'LoRA', name: 'LoRA', category: 'concepts', row: 8, col: 8,
+              definition: 'Low-Rank Adaptation efficiently fine-tunes large models by training small adapter layers.',
+              useCases: 'Efficient fine-tuning, parameter-efficient training, custom model adaptation.',
+              features: ['Memory efficient', 'Fast training', 'Low resource requirements', 'Maintains base model'],
+              related: 'Fine-tuning, PEFT, Adapters, Efficiency' },
+
+            { number: 51, symbol: 'AGI', name: 'Artificial General', category: 'concepts', row: 8, col: 9,
+              definition: 'Hypothetical AI with human-like ability to understand, learn, and apply knowledge across domains.',
+              useCases: 'Future AI goal, research direction, capability benchmark.',
+              features: ['General intelligence', 'Cross-domain learning', 'Human-level reasoning', 'Theoretical concept'],
+              related: 'AI Safety, Alignment, Superintelligence' },
+
+            { number: 52, symbol: 'MoE', name: 'Mixture of Experts', category: 'architectures', row: 8, col: 10,
+              definition: 'Architecture using multiple specialized sub-models (experts) with a gating network.',
+              useCases: 'Large-scale models, efficient inference, specialized task handling.',
+              features: ['Conditional computation', 'Scalability', 'Specialized experts', 'Efficiency gains'],
+              related: 'Model Architecture, Scaling, Efficiency' },
+
+            { number: 53, symbol: 'SFT', name: 'Supervised Fine-tuning', category: 'training', row: 8, col: 11,
+              definition: 'Fine-tuning with labeled examples to adapt model behavior to specific tasks or formats.',
+              useCases: 'Task adaptation, instruction following, format learning.',
+              features: ['Labeled data training', 'Behavior adaptation', 'Task-specific', 'Quality improvement'],
+              related: 'Fine-tuning, RLHF, Transfer Learning' },
+
+            { number: 54, symbol: 'VLM', name: 'Vision-Language', category: 'models', row: 8, col: 12,
+              definition: 'Models that process and understand both visual and textual information jointly.',
+              useCases: 'Image captioning, visual question answering, multimodal search.',
+              features: ['Multimodal understanding', 'Cross-modal learning', 'Joint representations', 'Versatile applications'],
+              related: 'Multimodal AI, CLIP, Computer Vision, NLP' }
+        ];
+
+        const periodicTable = document.getElementById('periodicTable');
+        const modal = document.getElementById('modal');
+        const closeBtn = document.getElementById('closeBtn');
+        const searchBox = document.getElementById('searchBox');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        let currentFilter = 'all';
+
+        // Create periodic table layout
+        function createPeriodicTable() {
+            periodicTable.innerHTML = '';
+            const maxCols = 18;
+            const maxRows = 8;
+            
+            // Create grid with empty spaces
+            for (let row = 1; row <= maxRows; row++) {
+                for (let col = 1; col <= maxCols; col++) {
+                    const element = aiElements.find(e => e.row === row && e.col === col);
+                    
+                    if (element) {
+                        const elementDiv = document.createElement('div');
+                        elementDiv.className = `element ${element.category}`;
+                        elementDiv.dataset.category = element.category;
+                        elementDiv.dataset.name = element.name.toLowerCase();
+                        elementDiv.dataset.symbol = element.symbol.toLowerCase();
+                        
+                        elementDiv.innerHTML = `
+                            <div class="element-number">${element.number}</div>
+                            <div class="element-symbol">${element.symbol}</div>
+                            <div class="element-name">${element.name}</div>
+                        `;
+                        
+                        elementDiv.addEventListener('click', () => showModal(element));
+                        periodicTable.appendChild(elementDiv);
+                    } else {
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.className = 'element empty';
+                        periodicTable.appendChild(emptyDiv);
+                    }
+                }
+            }
+        }
+
+        function showModal(element) {
+            document.getElementById('modalTitle').textContent = element.name;
+            document.getElementById('modalCategory').textContent = element.category.toUpperCase();
+            document.getElementById('modalCategory').className = `modal-category ${element.category}`;
+            document.getElementById('modalDefinition').textContent = element.definition;
+            document.getElementById('modalUseCases').textContent = element.useCases;
+            
+            const featuresList = document.getElementById('modalFeatures');
+            featuresList.innerHTML = '';
+            element.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                featuresList.appendChild(li);
+            });
+            
+            document.getElementById('modalRelated').textContent = element.related;
+            
+            modal.classList.add('active');
+        }
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Search functionality
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const elements = document.querySelectorAll('.element:not(.empty)');
+            
+            elements.forEach(element => {
+                const name = element.dataset.name;
+                const symbol = element.dataset.symbol;
+                
+                if (name.includes(searchTerm) || symbol.includes(searchTerm)) {
+                    element.style.display = 'flex';
+                } else {
+                    element.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter functionality
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                currentFilter = filter;
+                
+                const elements = document.querySelectorAll('.element:not(.empty)');
+                elements.forEach(element => {
+                    if (filter === 'all' || element.dataset.category === filter) {
+                        element.style.display = 'flex';
+                    } else {
+                        element.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Initialize
+        createPeriodicTable();
+    </script>
+</body>
+</html>
