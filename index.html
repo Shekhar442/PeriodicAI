@@ -4,7 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Periodic Table of AI Technologies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-surface: #12121a;
+            --bg-elevated: #1a1a24;
+            --bg-card: #1e1e2a;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-strong: rgba(255, 255, 255, 0.12);
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6b6b7b;
+            --accent: #00d4aa;
+            --accent-dim: rgba(0, 212, 170, 0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --font-sans: 'Outfit', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,173 +37,298 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            font-family: var(--font-sans);
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            height: 100vh;
             min-height: 100vh;
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+        }
+
+        .page-bg {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.12), transparent),
+                        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(99, 102, 241, 0.08), transparent),
+                        radial-gradient(ellipse 60% 40% at 0% 80%, rgba(236, 72, 153, 0.06), transparent);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            max-width: 1600px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-width: min(1680px, 100vw);
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 10px 16px 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            flex-shrink: 0;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 6px;
         }
 
         h1 {
-            text-align: center;
-            color: #2d3748;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: clamp(1.35rem, 3.5vw, 2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        h1 .gradient {
+            background: linear-gradient(135deg, #00d4aa 0%, #00a8ff 50%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .subtitle {
-            text-align: center;
-            color: #718096;
-            margin-bottom: 30px;
-            font-size: 1.1em;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+
+        .canvas .controls {
+            margin-bottom: 8px;
         }
 
         .controls {
             display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
             flex-wrap: wrap;
+            gap: 6px 8px;
             justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-wrap::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b6b7b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E") center/contain no-repeat;
         }
 
         .search-box {
-            padding: 12px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 25px;
-            font-size: 14px;
-            width: 300px;
-            transition: all 0.3s;
+            font-family: var(--font-sans);
+            padding: 6px 12px 6px 34px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 0.8rem;
+            width: 200px;
+            color: var(--text-primary);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-box::placeholder {
+            color: var(--text-muted);
         }
 
         .search-box:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 4px 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 100%;
         }
 
         .filter-btn {
-            padding: 10px 20px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
+            font-family: var(--font-sans);
             font-weight: 500;
+            font-size: 0.7rem;
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
         .filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-color: var(--border-strong);
         }
 
         .filter-btn.active {
-            border-color: #667eea;
-            background: #667eea;
-            color: white;
+            background: var(--accent);
+            color: var(--bg-deep);
+            border-color: var(--accent);
+        }
+
+        .canvas .legend {
+            margin-bottom: 8px;
         }
 
         .legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 6px 12px;
             justify-content: center;
-            padding: 15px;
-            background: #f7fafc;
-            border-radius: 12px;
+            padding: 6px 10px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            max-width: 100%;
+            flex-shrink: 0;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: #4a5568;
+            gap: 6px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
         }
 
         .legend-color {
-            width: 25px;
-            height: 25px;
-            border-radius: 6px;
-            border: 2px solid rgba(0, 0, 0, 0.1);
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .canvas {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 12px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .table-wrap {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            max-width: 100%;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .periodic-table {
             display: grid;
-            grid-template-columns: repeat(18, 1fr);
-            gap: 8px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(18, minmax(0, 1fr));
+            grid-template-rows: repeat(8, minmax(0, 1fr));
+            gap: 4px;
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
         }
 
         .element {
-            aspect-ratio: 1;
-            border-radius: 8px;
-            padding: 8px;
+            border-radius: var(--radius-sm);
+            padding: 4px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            border: 2px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
-            min-height: 90px;
+            min-height: 0;
         }
 
         .element:hover {
-            transform: scale(1.1);
+            transform: scale(1.06);
             z-index: 10;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .element:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 
         .element-number {
-            font-size: 10px;
-            font-weight: bold;
-            opacity: 0.7;
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            font-weight: 500;
+            opacity: 0.85;
             position: absolute;
-            top: 4px;
-            left: 6px;
+            top: 2px;
+            left: 4px;
         }
 
         .element-symbol {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 4px 0;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin: 0 0 2px;
+            letter-spacing: 0.02em;
         }
 
         .element-name {
-            font-size: 9px;
-            opacity: 0.8;
+            font-size: 0.55rem;
+            opacity: 0.9;
             line-height: 1.2;
+            font-weight: 500;
         }
 
-        /* Category Colors */
-        .models { background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: white; }
-        .techniques { background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; }
-        .architectures { background: linear-gradient(135deg, #f7b731, #f79f1f); color: white; }
-        .training { background: linear-gradient(135deg, #5f27cd, #341f97); color: white; }
-        .applications { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: white; }
-        .tools { background: linear-gradient(135deg, #fa8231, #f77737); color: white; }
-        .metrics { background: linear-gradient(135deg, #38ef7d, #11998e); color: white; }
-        .concepts { background: linear-gradient(135deg, #e94057, #8a2387); color: white; }
+        /* Category colors — dark-friendly */
+        .models { background: linear-gradient(145deg, #e11d48 0%, #be123c 100%); color: #fff; }
+        .techniques { background: linear-gradient(145deg, #0d9488 0%, #0f766e 100%); color: #fff; }
+        .architectures { background: linear-gradient(145deg, #d97706 0%, #b45309 100%); color: #fff; }
+        .training { background: linear-gradient(145deg, #7c3aed 0%, #5b21b6 100%); color: #fff; }
+        .applications { background: linear-gradient(145deg, #0284c7 0%, #0369a1 100%); color: #fff; }
+        .tools { background: linear-gradient(145deg, #ea580c 0%, #c2410c 100%); color: #fff; }
+        .metrics { background: linear-gradient(145deg, #059669 0%, #047857 100%); color: #fff; }
+        .concepts { background: linear-gradient(145deg, #a21caf 0%, #86198f 100%); color: #fff; }
 
         .empty {
             background: transparent;
             border: none;
             cursor: default;
+            box-shadow: none;
         }
 
         .empty:hover {
@@ -189,80 +339,113 @@
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 24px;
+            animation: fadeIn 0.2s ease;
         }
 
         .modal.active {
             display: flex;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 32px;
+            border-radius: var(--radius-xl);
+            max-width: 560px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.25s ease;
         }
 
         .close-btn {
             position: absolute;
-            top: 15px;
+            top: 20px;
             right: 20px;
-            font-size: 28px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
             cursor: pointer;
-            color: #718096;
-            transition: color 0.3s;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-sm);
+            transition: color 0.2s, background 0.2s;
         }
 
         .close-btn:hover {
-            color: #2d3748;
+            color: var(--text-primary);
+            background: var(--bg-elevated);
         }
 
         .modal-header {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding-right: 40px;
         }
 
         .modal-title {
-            font-size: 2em;
-            color: #2d3748;
-            margin-bottom: 5px;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
         }
 
         .modal-category {
             display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            color: white;
-            margin-top: 10px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #fff;
         }
 
         .modal-section {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
         }
 
         .modal-section h3 {
-            color: #4a5568;
-            margin-bottom: 10px;
-            font-size: 1.1em;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
-        .modal-section p, .modal-section ul {
-            color: #718096;
-            line-height: 1.6;
+        .modal-section p,
+        .modal-section ul {
+            color: var(--text-secondary);
+            line-height: 1.65;
+            font-size: 0.95rem;
         }
 
         .modal-section ul {
@@ -270,93 +453,96 @@
         }
 
         .modal-section li {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         @media (max-width: 1200px) {
             .periodic-table {
-                grid-template-columns: repeat(12, 1fr);
-            }
-            
-            .element-symbol {
-                font-size: 14px;
-            }
-            
-            .element-name {
-                font-size: 8px;
+                grid-template-columns: repeat(12, minmax(0, 1fr));
             }
         }
 
         @media (max-width: 768px) {
-            .periodic-table {
-                grid-template-columns: repeat(6, 1fr);
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
+            .container { padding: 8px 12px 10px; }
+            .periodic-table { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 3px; }
+            .search-box { width: 160px; }
+            .element-symbol { font-size: 0.6rem; }
+            .element-name { font-size: 0.5rem; }
+            .modal-content { padding: 24px; }
         }
     </style>
 </head>
 <body>
+    <div class="page-bg" aria-hidden="true"></div>
     <div class="container">
-        <h1>⚛️ Periodic Table of AI Technologies</h1>
-        <p class="subtitle">Explore the fundamental elements of Artificial Intelligence</p>
-        
-        <div class="controls">
-            <input type="text" class="search-box" id="searchBox" placeholder="Search AI technologies...">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="models">Models</button>
-            <button class="filter-btn" data-filter="techniques">Techniques</button>
-            <button class="filter-btn" data-filter="architectures">Architectures</button>
-            <button class="filter-btn" data-filter="training">Training</button>
-            <button class="filter-btn" data-filter="applications">Applications</button>
-            <button class="filter-btn" data-filter="tools">Tools</button>
-            <button class="filter-btn" data-filter="metrics">Metrics</button>
-            <button class="filter-btn" data-filter="concepts">Concepts</button>
-        </div>
+        <header class="header">
+            <span class="badge">AI Reference</span>
+            <h1><span class="gradient">Periodic Table</span> of AI Technologies</h1>
+            <p class="subtitle">Explore the fundamental elements of artificial intelligence — models, techniques, architectures, and more.</p>
+        </header>
 
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color models"></div>
-                <span>Foundation Models</span>
+        <div class="canvas">
+            <div class="controls">
+                <div class="search-wrap">
+                    <input type="text" class="search-box" id="searchBox" placeholder="Search AI technologies..." aria-label="Search technologies">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="models">Models</button>
+                    <button class="filter-btn" data-filter="techniques">Techniques</button>
+                    <button class="filter-btn" data-filter="architectures">Architectures</button>
+                    <button class="filter-btn" data-filter="training">Training</button>
+                    <button class="filter-btn" data-filter="applications">Applications</button>
+                    <button class="filter-btn" data-filter="tools">Tools</button>
+                    <button class="filter-btn" data-filter="metrics">Metrics</button>
+                    <button class="filter-btn" data-filter="concepts">Concepts</button>
+                </div>
             </div>
-            <div class="legend-item">
-                <div class="legend-color techniques"></div>
-                <span>AI Techniques</span>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color models"></div>
+                    <span>Foundation Models</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color techniques"></div>
+                    <span>AI Techniques</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color architectures"></div>
+                    <span>Architectures</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color training"></div>
+                    <span>Training Methods</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color applications"></div>
+                    <span>Applications</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color tools"></div>
+                    <span>Tools & Frameworks</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color metrics"></div>
+                    <span>Evaluation Metrics</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color concepts"></div>
+                    <span>Core Concepts</span>
+                </div>
             </div>
-            <div class="legend-item">
-                <div class="legend-color architectures"></div>
-                <span>Architectures</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color training"></div>
-                <span>Training Methods</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color applications"></div>
-                <span>Applications</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color tools"></div>
-                <span>Tools & Frameworks</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color metrics"></div>
-                <span>Evaluation Metrics</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color concepts"></div>
-                <span>Core Concepts</span>
+
+            <div class="table-wrap">
+                <div class="periodic-table" id="periodicTable"></div>
             </div>
         </div>
-
-        <div class="periodic-table" id="periodicTable"></div>
     </div>
 
-    <div class="modal" id="modal">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-content">
-            <span class="close-btn" id="closeBtn">&times;</span>
+            <button type="button" class="close-btn" id="closeBtn" aria-label="Close">&times;</button>
             <div class="modal-header">
                 <h2 class="modal-title" id="modalTitle"></h2>
                 <span class="modal-category" id="modalCategory"></span>
@@ -746,8 +932,16 @@
                             <div class="element-symbol">${element.symbol}</div>
                             <div class="element-name">${element.name}</div>
                         `;
-                        
+                        elementDiv.setAttribute('tabindex', '0');
+                        elementDiv.setAttribute('role', 'button');
+                        elementDiv.setAttribute('aria-label', `${element.name}, ${element.category}`);
                         elementDiv.addEventListener('click', () => showModal(element));
+                        elementDiv.addEventListener('keydown', (e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                showModal(element);
+                            }
+                        });
                         periodicTable.appendChild(elementDiv);
                     } else {
                         const emptyDiv = document.createElement('div');
@@ -788,40 +982,33 @@
             }
         });
 
-        // Search functionality
-        searchBox.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            }
+        });
+
+        function applyFilters() {
+            const searchTerm = searchBox.value.toLowerCase().trim();
             const elements = document.querySelectorAll('.element:not(.empty)');
-            
             elements.forEach(element => {
                 const name = element.dataset.name;
                 const symbol = element.dataset.symbol;
-                
-                if (name.includes(searchTerm) || symbol.includes(searchTerm)) {
-                    element.style.display = 'flex';
-                } else {
-                    element.style.display = 'none';
-                }
+                const category = element.dataset.category;
+                const matchesSearch = !searchTerm || name.includes(searchTerm) || symbol.includes(searchTerm);
+                const matchesFilter = currentFilter === 'all' || category === currentFilter;
+                element.style.display = matchesSearch && matchesFilter ? 'flex' : 'none';
             });
-        });
+        }
 
-        // Filter functionality
+        searchBox.addEventListener('input', applyFilters);
+
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                
-                const filter = btn.dataset.filter;
-                currentFilter = filter;
-                
-                const elements = document.querySelectorAll('.element:not(.empty)');
-                elements.forEach(element => {
-                    if (filter === 'all' || element.dataset.category === filter) {
-                        element.style.display = 'flex';
-                    } else {
-                        element.style.display = 'none';
-                    }
-                });
+                currentFilter = btn.dataset.filter;
+                applyFilters();
             });
         });
 
