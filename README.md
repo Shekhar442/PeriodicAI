@@ -1,15 +1,20 @@
 # Periodic Table of AI Technologies
 
-A single-page reference that presents AI technologies in a periodic-table style layout. Explore models, techniques, architectures, training methods, applications, tools, metrics, and core concepts in one place.
+A single-page reference that presents AI technologies in a periodic-table style layout. Explore **54 elements** across models, techniques, architectures, training methods, applications, tools, metrics, and core concepts—all in one place.
 
 ## Features
 
-- **Periodic-style grid** — 50+ AI “elements” arranged by category
-- **Search** — Filter by name or symbol (e.g. GPT, RAG, BERT)
-- **Category filters** — Models, Techniques, Architectures, Training, Applications, Tools, Metrics, Concepts
-- **Legend** — Color-coded categories (Foundation Models, AI Techniques, Architectures, etc.)
-- **Detail modal** — Click any card for definition, use cases, key features, and related concepts
-- **Responsive** — Layout adapts to different screen sizes; table scrolls horizontally on narrow viewports
+- **Periodic-style grid** — 54 AI “elements” arranged by category (Foundation Models, Techniques, Architectures, Training, Applications, Tools, Metrics, Core Concepts)
+- **Search** — Filter by name or symbol (e.g. GPT, RAG, BERT, Embeddings)
+- **Category filters** — All, Models, Techniques, Architectures, Training, Applications, Tools, Metrics, Concepts
+- **Legend** — Color-coded categories for quick scanning
+- **Detail modal** — Click any element for:
+  - Definition and use cases  
+  - Key features  
+  - Related concepts  
+  - **Understand the concept** — Official link to documentation, papers, or articles (OpenAI, Google, Hugging Face, arXiv, Wikipedia, etc.)
+- **Architecture diagrams** — Category-level diagrams when viewing an element or a filter
+- **Responsive** — Layout adapts to screen size; table scrolls horizontally on narrow viewports
 - **No build step** — Pure HTML, CSS, and JavaScript in one file
 
 ## How to Run
@@ -21,12 +26,12 @@ A single-page reference that presents AI technologies in a periodic-table style 
    ```
    Then visit `http://localhost:8000`.
 
-No npm, node, or other dependencies are required.
+No npm, Node, or other dependencies are required.
 
 ## Tech
 
 - Single self-contained **HTML** file
-- **CSS** (variables, grid, flexbox, responsive breakpoints)
+- **CSS** (custom properties, grid, flexbox, responsive breakpoints)
 - **Vanilla JavaScript** (no frameworks)
 - Fonts: [Outfit](https://fonts.google.com/specimen/Outfit), [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) via Google Fonts
 
@@ -34,7 +39,8 @@ No npm, node, or other dependencies are required.
 
 ```
 PeriodicAI/
-└── index.html   # App (HTML + CSS + JS)
+├── index.html   # App (HTML + CSS + JS)
+└── README.md    # This file
 ```
 
 ## License

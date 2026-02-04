@@ -456,6 +456,25 @@
             margin-bottom: 6px;
         }
 
+        .modal-learn-more-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 8px 14px;
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-sm);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .modal-learn-more-link:hover {
+            background: var(--accent-dim);
+            color: var(--text-primary);
+        }
+
         .modal-diagram-wrap {
             margin-bottom: 24px;
             padding: 16px;
@@ -600,6 +619,10 @@
                 <h3>Related Concepts</h3>
                 <p id="modalRelated"></p>
             </div>
+            <div class="modal-section modal-learn-more-wrap" id="modalLearnMoreWrap">
+                <h3>Understand the concept</h3>
+                <a id="modalLearnMoreLink" class="modal-learn-more-link" href="#" target="_blank" rel="noopener noreferrer">Open official resource →</a>
+            </div>
         </div>
     </div>
 
@@ -610,332 +633,332 @@
               definition: 'Generative Pre-trained Transformer models developed by OpenAI, capable of understanding and generating human-like text.',
               useCases: 'Content creation, coding assistance, conversational AI, text summarization, translation, and question answering.',
               features: ['Autoregressive text generation', 'Large-scale pre-training', 'Few-shot learning capabilities', 'Versatile across multiple tasks'],
-              related: 'Transformers, LLMs, Fine-tuning, Prompt Engineering' },
+              related: 'Transformers, LLMs, Fine-tuning, Prompt Engineering', learnMoreUrl: 'https://openai.com/index/gpt-4-research/' },
             
             { number: 2, symbol: 'BERT', name: 'BERT', category: 'models', row: 1, col: 2,
               definition: 'Bidirectional Encoder Representations from Transformers by Google, designed to understand context from both directions.',
               useCases: 'Search engines, sentiment analysis, named entity recognition, question answering systems.',
               features: ['Bidirectional context understanding', 'Masked language modeling', 'Pre-training and fine-tuning approach', 'Excellent for classification tasks'],
-              related: 'Transformers, NLP, Embeddings, Transfer Learning' },
+              related: 'Transformers, NLP, Embeddings, Transfer Learning', learnMoreUrl: 'https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html' },
             
             { number: 3, symbol: 'T5', name: 'T5 Model', category: 'models', row: 1, col: 3,
               definition: 'Text-to-Text Transfer Transformer treats every NLP task as a text generation problem.',
               useCases: 'Translation, summarization, classification reformulated as generation tasks.',
               features: ['Unified text-to-text framework', 'Flexible task handling', 'Transfer learning', 'Scalable architecture'],
-              related: 'Transformers, Seq2Seq, Transfer Learning' },
+              related: 'Transformers, Seq2Seq, Transfer Learning', learnMoreUrl: 'https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html' },
             
             { number: 4, symbol: 'Claude', name: 'Claude AI', category: 'models', row: 1, col: 4,
               definition: 'Constitutional AI assistant by Anthropic, designed to be helpful, harmless, and honest.',
               useCases: 'Conversational AI, coding, analysis, creative writing, research assistance.',
               features: ['Constitutional AI training', 'Extended context windows', 'Strong reasoning capabilities', 'Safety-focused design'],
-              related: 'LLMs, RLHF, Constitutional AI, Safety' },
+              related: 'LLMs, RLHF, Constitutional AI, Safety', learnMoreUrl: 'https://www.anthropic.com/research' },
             
             { number: 5, symbol: 'LLaMA', name: 'LLaMA', category: 'models', row: 1, col: 5,
               definition: 'Large Language Model Meta AI, open-source foundation models by Meta.',
               useCases: 'Research, custom model development, open-source AI applications.',
               features: ['Open-source availability', 'Efficient parameter scaling', 'Research-friendly', 'Community-driven development'],
-              related: 'Open Source, LLMs, Fine-tuning' },
+              related: 'Open Source, LLMs, Fine-tuning', learnMoreUrl: 'https://ai.meta.com/blog/large-language-model-llama-meta-ai/' },
 
             { number: 6, symbol: 'Gem', name: 'Gemini', category: 'models', row: 1, col: 6,
               definition: 'Multimodal AI model by Google that can process text, images, audio, and video.',
               useCases: 'Multimodal understanding, complex reasoning, code generation, visual question answering.',
               features: ['Multimodal processing', 'Advanced reasoning', 'Native code understanding', 'Long context handling'],
-              related: 'Multimodal AI, LLMs, Vision-Language Models' },
+              related: 'Multimodal AI, LLMs, Vision-Language Models', learnMoreUrl: 'https://deepmind.google/technologies/gemini/' },
 
             // AI Techniques (Row 2)
             { number: 7, symbol: 'RAG', name: 'Retrieval Augmented', category: 'techniques', row: 2, col: 1,
               definition: 'Retrieval-Augmented Generation combines language models with external knowledge retrieval for more accurate responses.',
               useCases: 'Question answering with current data, document search, knowledge-intensive tasks, reducing hallucinations.',
               features: ['External knowledge integration', 'Reduced hallucinations', 'Up-to-date information access', 'Scalable knowledge base'],
-              related: 'Embeddings, Vector Databases, LLMs, Semantic Search' },
+              related: 'Embeddings, Vector Databases, LLMs, Semantic Search', learnMoreUrl: 'https://ai.meta.com/blog/retrieval-augmented-generation-streamlining-the-application-of-knowledge-to-meta-ai/' },
             
             { number: 8, symbol: 'CoT', name: 'Chain of Thought', category: 'techniques', row: 2, col: 2,
               definition: 'Prompting technique that encourages models to show step-by-step reasoning before answering.',
               useCases: 'Complex problem solving, mathematical reasoning, multi-step tasks, improving accuracy.',
               features: ['Step-by-step reasoning', 'Improved accuracy on complex tasks', 'Transparent thought process', 'Better error detection'],
-              related: 'Prompt Engineering, Reasoning, Few-shot Learning' },
+              related: 'Prompt Engineering, Reasoning, Few-shot Learning', learnMoreUrl: 'https://arxiv.org/abs/2201.11903' },
             
             { number: 9, symbol: 'FT', name: 'Fine-tuning', category: 'techniques', row: 2, col: 3,
               definition: 'Training a pre-trained model on specific data to adapt it for particular tasks or domains.',
               useCases: 'Domain adaptation, task-specific optimization, custom AI applications.',
               features: ['Transfer learning', 'Task specialization', 'Efficient training', 'Performance improvement'],
-              related: 'Transfer Learning, PEFT, LoRA, Training' },
+              related: 'Transfer Learning, PEFT, LoRA, Training', learnMoreUrl: 'https://huggingface.co/docs/transformers/training' },
             
             { number: 10, symbol: 'FSL', name: 'Few-shot Learning', category: 'techniques', row: 2, col: 4,
               definition: 'Learning approach where models perform tasks with only a few examples provided in the prompt.',
               useCases: 'Rapid task adaptation, low-data scenarios, prompt-based learning.',
               features: ['Minimal training data needed', 'In-context learning', 'Flexible task adaptation', 'Cost-effective'],
-              related: 'Prompt Engineering, In-context Learning, Meta-learning' },
+              related: 'Prompt Engineering, In-context Learning, Meta-learning', learnMoreUrl: 'https://arxiv.org/abs/2005.14165' },
             
             { number: 11, symbol: 'ZSL', name: 'Zero-shot Learning', category: 'techniques', row: 2, col: 5,
               definition: 'Ability of models to perform tasks without any specific examples, relying only on instructions.',
               useCases: 'Novel task execution, generalization, instruction following.',
               features: ['No examples needed', 'Strong generalization', 'Instruction-based', 'Versatile application'],
-              related: 'Prompt Engineering, Transfer Learning, Generalization' },
+              related: 'Prompt Engineering, Transfer Learning, Generalization', learnMoreUrl: 'https://arxiv.org/abs/2104.08786' },
 
             { number: 12, symbol: 'PE', name: 'Prompt Engineering', category: 'techniques', row: 2, col: 6,
               definition: 'The art and science of crafting effective prompts to get desired outputs from AI models.',
               useCases: 'Optimizing model responses, task-specific instructions, improving output quality.',
               features: ['No model retraining needed', 'Immediate results', 'Iterative refinement', 'Cost-effective optimization'],
-              related: 'CoT, Few-shot, Zero-shot, System Prompts' },
+              related: 'CoT, Few-shot, Zero-shot, System Prompts', learnMoreUrl: 'https://www.promptingguide.ai/' },
 
             // Architectures (Row 3)
             { number: 13, symbol: 'Tfm', name: 'Transformers', category: 'architectures', row: 3, col: 1,
               definition: 'Neural network architecture using self-attention mechanisms, foundation of modern NLP.',
               useCases: 'Language models, translation, text generation, sequence processing.',
               features: ['Self-attention mechanism', 'Parallel processing', 'Long-range dependencies', 'Scalable architecture'],
-              related: 'Attention, BERT, GPT, Encoder-Decoder' },
+              related: 'Attention, BERT, GPT, Encoder-Decoder', learnMoreUrl: 'https://arxiv.org/abs/1706.03762' },
             
             { number: 14, symbol: 'CNN', name: 'Conv. Networks', category: 'architectures', row: 3, col: 2,
               definition: 'Convolutional Neural Networks specialized for processing grid-like data such as images.',
               useCases: 'Image classification, object detection, facial recognition, medical imaging.',
               features: ['Spatial hierarchy learning', 'Parameter sharing', 'Translation invariance', 'Feature extraction'],
-              related: 'Computer Vision, Deep Learning, ResNet, VGG' },
+              related: 'Computer Vision, Deep Learning, ResNet, VGG', learnMoreUrl: 'https://en.wikipedia.org/wiki/Convolutional_neural_network' },
             
             { number: 15, symbol: 'RNN', name: 'Recurrent Networks', category: 'architectures', row: 3, col: 3,
               definition: 'Networks with loops allowing information persistence, designed for sequential data.',
               useCases: 'Time series analysis, speech recognition, language modeling.',
               features: ['Sequential processing', 'Memory of previous inputs', 'Variable-length sequences', 'Temporal dependencies'],
-              related: 'LSTM, GRU, Sequence Modeling, Time Series' },
+              related: 'LSTM, GRU, Sequence Modeling, Time Series', learnMoreUrl: 'https://en.wikipedia.org/wiki/Recurrent_neural_network' },
             
             { number: 16, symbol: 'GAN', name: 'Generative Adv. Networks', category: 'architectures', row: 3, col: 4,
               definition: 'Two neural networks competing: generator creates data, discriminator evaluates authenticity.',
               useCases: 'Image generation, data augmentation, style transfer, synthetic data creation.',
               features: ['Adversarial training', 'High-quality generation', 'Unsupervised learning', 'Creative applications'],
-              related: 'Generative Models, Computer Vision, StyleGAN' },
+              related: 'Generative Models, Computer Vision, StyleGAN', learnMoreUrl: 'https://arxiv.org/abs/1406.2661' },
             
             { number: 17, symbol: 'DM', name: 'Diffusion Models', category: 'architectures', row: 3, col: 5,
               definition: 'Generative models that learn to reverse a gradual noising process to create data.',
               useCases: 'Image generation (Stable Diffusion, DALL-E), audio synthesis, video generation.',
               features: ['High-quality outputs', 'Stable training', 'Controllable generation', 'State-of-the-art results'],
-              related: 'Generative AI, Image Synthesis, DALL-E, Midjourney' },
+              related: 'Generative AI, Image Synthesis, DALL-E, Midjourney', learnMoreUrl: 'https://arxiv.org/abs/2006.11239' },
 
             { number: 18, symbol: 'AE', name: 'Autoencoders', category: 'architectures', row: 3, col: 6,
               definition: 'Neural networks that learn compressed representations of data through encoding and decoding.',
               useCases: 'Dimensionality reduction, anomaly detection, denoising, feature learning.',
               features: ['Unsupervised learning', 'Compression', 'Reconstruction', 'Feature extraction'],
-              related: 'VAE, Embeddings, Dimensionality Reduction' },
+              related: 'VAE, Embeddings, Dimensionality Reduction', learnMoreUrl: 'https://en.wikipedia.org/wiki/Autoencoder' },
 
             // Training Methods (Row 4)
             { number: 19, symbol: 'SL', name: 'Supervised Learning', category: 'training', row: 4, col: 1,
               definition: 'Learning from labeled data where the model learns to map inputs to known outputs.',
               useCases: 'Classification, regression, prediction tasks with labeled datasets.',
               features: ['Labeled training data', 'Clear objectives', 'Direct feedback', 'High accuracy potential'],
-              related: 'Classification, Regression, Labels, Training Data' },
+              related: 'Classification, Regression, Labels, Training Data', learnMoreUrl: 'https://en.wikipedia.org/wiki/Supervised_learning' },
             
             { number: 20, symbol: 'UL', name: 'Unsupervised Learning', category: 'training', row: 4, col: 2,
               definition: 'Learning patterns from unlabeled data without explicit supervision.',
               useCases: 'Clustering, dimensionality reduction, pattern discovery, anomaly detection.',
               features: ['No labels needed', 'Pattern discovery', 'Data exploration', 'Cost-effective'],
-              related: 'Clustering, PCA, K-means, Self-supervised' },
+              related: 'Clustering, PCA, K-means, Self-supervised', learnMoreUrl: 'https://en.wikipedia.org/wiki/Unsupervised_learning' },
             
             { number: 21, symbol: 'RL', name: 'Reinforcement Learning', category: 'training', row: 4, col: 3,
               definition: 'Learning through interaction with environment, receiving rewards or penalties for actions.',
               useCases: 'Game playing, robotics, autonomous systems, optimization problems.',
               features: ['Reward-based learning', 'Sequential decision making', 'Exploration vs exploitation', 'Long-term optimization'],
-              related: 'RLHF, Policy Gradient, Q-Learning, Agent' },
+              related: 'RLHF, Policy Gradient, Q-Learning, Agent', learnMoreUrl: 'https://spinningup.openai.com/' },
             
             { number: 22, symbol: 'TL', name: 'Transfer Learning', category: 'training', row: 4, col: 4,
               definition: 'Applying knowledge learned from one task to improve learning on a related task.',
               useCases: 'Domain adaptation, few-shot learning, pre-training and fine-tuning.',
               features: ['Leverages pre-trained models', 'Faster training', 'Less data needed', 'Improved performance'],
-              related: 'Fine-tuning, Pre-training, Domain Adaptation' },
+              related: 'Fine-tuning, Pre-training, Domain Adaptation', learnMoreUrl: 'https://en.wikipedia.org/wiki/Transfer_learning' },
             
             { number: 23, symbol: 'SSL', name: 'Self-supervised', category: 'training', row: 4, col: 5,
               definition: 'Learning representations from unlabeled data by creating pseudo-labels from the data itself.',
               useCases: 'Pre-training language models, vision models, representation learning.',
               features: ['No manual labels', 'Scalable', 'Rich representations', 'Foundation model training'],
-              related: 'Pre-training, Masked Language Modeling, Contrastive Learning' },
+              related: 'Pre-training, Masked Language Modeling, Contrastive Learning', learnMoreUrl: 'https://en.wikipedia.org/wiki/Self-supervised_learning' },
 
             { number: 24, symbol: 'RLHF', name: 'RL Human Feedback', category: 'training', row: 4, col: 6,
               definition: 'Reinforcement Learning from Human Feedback aligns AI behavior with human preferences.',
               useCases: 'Aligning language models, improving response quality, safety training.',
               features: ['Human preference learning', 'Safety alignment', 'Quality improvement', 'Iterative refinement'],
-              related: 'Reinforcement Learning, Constitutional AI, Alignment' },
+              related: 'Reinforcement Learning, Constitutional AI, Alignment', learnMoreUrl: 'https://openai.com/research/learning-from-human-preferences' },
 
             // Applications (Row 5)
             { number: 25, symbol: 'CV', name: 'Computer Vision', category: 'applications', row: 5, col: 1,
               definition: 'AI field enabling computers to derive meaningful information from visual inputs.',
               useCases: 'Object detection, facial recognition, autonomous vehicles, medical imaging, surveillance.',
               features: ['Image understanding', 'Pattern recognition', 'Real-time processing', 'Multi-task capabilities'],
-              related: 'CNN, Object Detection, Image Classification, YOLO' },
+              related: 'CNN, Object Detection, Image Classification, YOLO', learnMoreUrl: 'https://en.wikipedia.org/wiki/Computer_vision' },
             
             { number: 26, symbol: 'NLP', name: 'Natural Language', category: 'applications', row: 5, col: 2,
               definition: 'Natural Language Processing enables computers to understand, interpret, and generate human language.',
               useCases: 'Chatbots, translation, sentiment analysis, text summarization, question answering.',
               features: ['Text understanding', 'Language generation', 'Context awareness', 'Multilingual support'],
-              related: 'Transformers, Tokenization, Embeddings, LLMs' },
+              related: 'Transformers, Tokenization, Embeddings, LLMs', learnMoreUrl: 'https://en.wikipedia.org/wiki/Natural_language_processing' },
             
             { number: 27, symbol: 'SR', name: 'Speech Recognition', category: 'applications', row: 5, col: 3,
               definition: 'Converting spoken language into text using AI models.',
               useCases: 'Virtual assistants, transcription services, voice commands, accessibility tools.',
               features: ['Audio processing', 'Real-time transcription', 'Speaker recognition', 'Noise handling'],
-              related: 'Audio Processing, Whisper, ASR, Signal Processing' },
+              related: 'Audio Processing, Whisper, ASR, Signal Processing', learnMoreUrl: 'https://en.wikipedia.org/wiki/Speech_recognition' },
             
             { number: 28, symbol: 'Rob', name: 'Robotics', category: 'applications', row: 5, col: 4,
               definition: 'AI application in physical robots for autonomous operation and decision-making.',
               useCases: 'Manufacturing automation, autonomous vehicles, drones, medical robots.',
               features: ['Physical interaction', 'Real-time decisions', 'Sensor integration', 'Motion planning'],
-              related: 'Reinforcement Learning, Computer Vision, Path Planning' },
+              related: 'Reinforcement Learning, Computer Vision, Path Planning', learnMoreUrl: 'https://en.wikipedia.org/wiki/Robotics' },
             
             { number: 29, symbol: 'RecS', name: 'Recommendation', category: 'applications', row: 5, col: 5,
               definition: 'Systems that predict user preferences and suggest relevant items or content.',
               useCases: 'E-commerce, streaming platforms, social media, content discovery.',
               features: ['Personalization', 'Collaborative filtering', 'Content-based filtering', 'Real-time updates'],
-              related: 'Collaborative Filtering, Embeddings, Matrix Factorization' },
+              related: 'Collaborative Filtering, Embeddings, Matrix Factorization', learnMoreUrl: 'https://en.wikipedia.org/wiki/Recommender_system' },
 
             { number: 30, symbol: 'GenAI', name: 'Generative AI', category: 'applications', row: 5, col: 6,
               definition: 'AI systems that can create new content including text, images, audio, and video.',
               useCases: 'Content creation, art generation, code synthesis, drug discovery, design assistance.',
               features: ['Creative output', 'Multimodal generation', 'Human-like quality', 'Rapid iteration'],
-              related: 'GPT, Diffusion Models, GANs, LLMs' },
+              related: 'GPT, Diffusion Models, GANs, LLMs', learnMoreUrl: 'https://en.wikipedia.org/wiki/Generative_artificial_intelligence' },
 
             // Tools & Frameworks (Row 6)
             { number: 31, symbol: 'TF', name: 'TensorFlow', category: 'tools', row: 6, col: 1,
               definition: 'Open-source machine learning framework by Google for building and training models.',
               useCases: 'Model development, production deployment, research, mobile ML.',
               features: ['Flexible architecture', 'Production-ready', 'Mobile support', 'Large ecosystem'],
-              related: 'Keras, Neural Networks, Model Training, Google' },
+              related: 'Keras, Neural Networks, Model Training, Google', learnMoreUrl: 'https://www.tensorflow.org/' },
             
             { number: 32, symbol: 'PyT', name: 'PyTorch', category: 'tools', row: 6, col: 2,
               definition: 'Open-source machine learning library by Meta, popular for research and development.',
               useCases: 'Research, prototyping, production models, computer vision, NLP.',
               features: ['Dynamic computation graphs', 'Pythonic interface', 'Strong GPU support', 'Research-friendly'],
-              related: 'Deep Learning, Neural Networks, Meta, Research' },
+              related: 'Deep Learning, Neural Networks, Meta, Research', learnMoreUrl: 'https://pytorch.org/' },
             
             { number: 33, symbol: 'HF', name: 'Hugging Face', category: 'tools', row: 6, col: 3,
               definition: 'Platform providing pre-trained models, datasets, and tools for NLP and ML.',
               useCases: 'Model sharing, fine-tuning, inference, dataset access, model deployment.',
               features: ['Model hub', 'Easy integration', 'Community-driven', 'Pre-trained models'],
-              related: 'Transformers, Model Hub, Fine-tuning, Open Source' },
+              related: 'Transformers, Model Hub, Fine-tuning, Open Source', learnMoreUrl: 'https://huggingface.co/' },
             
             { number: 34, symbol: 'LC', name: 'LangChain', category: 'tools', row: 6, col: 4,
               definition: 'Framework for developing applications powered by language models with chains and agents.',
               useCases: 'Building LLM apps, chatbots, document QA, agents, workflow automation.',
               features: ['Chain composition', 'Agent framework', 'Memory management', 'Tool integration'],
-              related: 'LLMs, RAG, Agents, Orchestration' },
+              related: 'LLMs, RAG, Agents, Orchestration', learnMoreUrl: 'https://python.langchain.com/' },
             
             { number: 35, symbol: 'API', name: 'OpenAI API', category: 'tools', row: 6, col: 5,
               definition: 'API service providing access to GPT models and other AI capabilities.',
               useCases: 'Application integration, chatbots, content generation, embeddings.',
               features: ['Easy integration', 'Scalable', 'Multiple models', 'Well-documented'],
-              related: 'GPT, API Integration, Cloud Services, Embeddings' },
+              related: 'GPT, API Integration, Cloud Services, Embeddings', learnMoreUrl: 'https://platform.openai.com/docs' },
 
             { number: 36, symbol: 'VDB', name: 'Vector DB', category: 'tools', row: 6, col: 6,
               definition: 'Databases optimized for storing and querying high-dimensional vector embeddings.',
               useCases: 'Semantic search, RAG systems, similarity matching, recommendation engines.',
               features: ['Fast similarity search', 'Scalable storage', 'Optimized indexing', 'Integration-friendly'],
-              related: 'Embeddings, RAG, Semantic Search, Pinecone, Weaviate' },
+              related: 'Embeddings, RAG, Semantic Search, Pinecone, Weaviate', learnMoreUrl: 'https://www.pinecone.io/learn/vector-database/' },
 
             // Evaluation Metrics (Row 7)
             { number: 37, symbol: 'Acc', name: 'Accuracy', category: 'metrics', row: 7, col: 1,
               definition: 'Proportion of correct predictions among total predictions made.',
               useCases: 'Classification tasks, model evaluation, performance benchmarking.',
               features: ['Simple interpretation', 'Common metric', 'Baseline measure', 'Easy calculation'],
-              related: 'Precision, Recall, F1 Score, Evaluation' },
+              related: 'Precision, Recall, F1 Score, Evaluation', learnMoreUrl: 'https://en.wikipedia.org/wiki/Accuracy_and_precision' },
             
             { number: 38, symbol: 'PPL', name: 'Perplexity', category: 'metrics', row: 7, col: 2,
               definition: 'Measure of how well a probability model predicts a sample, common in language models.',
               useCases: 'Language model evaluation, model comparison, training monitoring.',
               features: ['Language model metric', 'Lower is better', 'Probability-based', 'Standard benchmark'],
-              related: 'Language Models, Cross-entropy, Evaluation, NLP' },
+              related: 'Language Models, Cross-entropy, Evaluation, NLP', learnMoreUrl: 'https://en.wikipedia.org/wiki/Perplexity' },
             
             { number: 39, symbol: 'BLEU', name: 'BLEU Score', category: 'metrics', row: 7, col: 3,
               definition: 'Bilingual Evaluation Understudy measures quality of machine-translated text.',
               useCases: 'Machine translation evaluation, text generation quality assessment.',
               features: ['N-gram precision', 'Reference-based', 'Automated evaluation', 'Translation quality'],
-              related: 'Translation, ROUGE, Text Generation, NLP' },
+              related: 'Translation, ROUGE, Text Generation, NLP', learnMoreUrl: 'https://en.wikipedia.org/wiki/BLEU' },
             
             { number: 40, symbol: 'RG', name: 'ROUGE', category: 'metrics', row: 7, col: 4,
               definition: 'Recall-Oriented Understudy for Gisting Evaluation measures summarization quality.',
               useCases: 'Text summarization evaluation, content overlap measurement.',
               features: ['Recall-focused', 'Reference comparison', 'Multiple variants', 'Summarization metric'],
-              related: 'Summarization, BLEU, Text Generation, Evaluation' },
+              related: 'Summarization, BLEU, Text Generation, Evaluation', learnMoreUrl: 'https://en.wikipedia.org/wiki/ROUGE_(metric)' },
             
             { number: 41, symbol: 'F1', name: 'F1 Score', category: 'metrics', row: 7, col: 5,
               definition: 'Harmonic mean of precision and recall, balancing both metrics.',
               useCases: 'Classification evaluation, imbalanced datasets, model comparison.',
               features: ['Balanced metric', 'Handles imbalance', 'Single number summary', 'Widely used'],
-              related: 'Precision, Recall, Accuracy, Classification' },
+              related: 'Precision, Recall, Accuracy, Classification', learnMoreUrl: 'https://en.wikipedia.org/wiki/F-score' },
 
             { number: 42, symbol: 'AUC', name: 'AUC-ROC', category: 'metrics', row: 7, col: 6,
               definition: 'Area Under the Receiver Operating Characteristic curve measures classification performance.',
               useCases: 'Binary classification, model comparison, threshold selection.',
               features: ['Threshold-independent', 'Probabilistic interpretation', 'Robust metric', 'Standard benchmark'],
-              related: 'Classification, Precision-Recall, ROC Curve' },
+              related: 'Classification, Precision-Recall, ROC Curve', learnMoreUrl: 'https://en.wikipedia.org/wiki/Receiver_operating_characteristic' },
 
             // Core Concepts (Row 8)
             { number: 43, symbol: 'Emb', name: 'Embeddings', category: 'concepts', row: 8, col: 1,
               definition: 'Dense vector representations that capture semantic meaning of text, images, or other data.',
               useCases: 'Semantic search, similarity matching, RAG systems, clustering.',
               features: ['Semantic representation', 'Fixed dimensions', 'Similarity computation', 'Transfer learning'],
-              related: 'Vector Databases, Semantic Search, RAG, NLP' },
+              related: 'Vector Databases, Semantic Search, RAG, NLP', learnMoreUrl: 'https://huggingface.co/docs/transformers/en/glossary#embedding' },
             
             { number: 44, symbol: 'Tok', name: 'Tokenization', category: 'concepts', row: 8, col: 2,
               definition: 'Process of breaking text into smaller units (tokens) for model processing.',
               useCases: 'Text preprocessing, model input preparation, language processing.',
               features: ['Text splitting', 'Vocabulary mapping', 'Subword units', 'Language-specific'],
-              related: 'NLP, BPE, WordPiece, Vocabulary' },
+              related: 'NLP, BPE, WordPiece, Vocabulary', learnMoreUrl: 'https://huggingface.co/docs/transformers/tokenizer_summary' },
             
             { number: 45, symbol: 'CW', name: 'Context Window', category: 'concepts', row: 8, col: 3,
               definition: 'Maximum amount of text a model can process at once, measured in tokens.',
               useCases: 'Understanding model limitations, document processing, conversation management.',
               features: ['Token limit', 'Memory constraint', 'Processing capacity', 'Model-specific'],
-              related: 'Tokens, LLMs, Memory, Attention' },
+              related: 'Tokens, LLMs, Memory, Attention', learnMoreUrl: 'https://platform.openai.com/docs/guides/context-window' },
             
             { number: 46, symbol: 'Temp', name: 'Temperature', category: 'concepts', row: 8, col: 4,
               definition: 'Parameter controlling randomness in model outputs; higher values increase creativity.',
               useCases: 'Controlling output diversity, creative writing, deterministic responses.',
               features: ['Randomness control', '0-2 range typical', 'Output diversity', 'Sampling parameter'],
-              related: 'Sampling, Top-p, Generation, Creativity' },
+              related: 'Sampling, Top-p, Generation, Creativity', learnMoreUrl: 'https://platform.openai.com/docs/guides/text-generation' },
             
             { number: 47, symbol: 'Top', name: 'Top-p Sampling', category: 'concepts', row: 8, col: 5,
               definition: 'Nucleus sampling that selects from smallest set of tokens whose cumulative probability exceeds p.',
               useCases: 'Balancing quality and diversity, controlled generation.',
               features: ['Dynamic vocabulary', 'Quality control', 'Diversity management', 'Alternative to temperature'],
-              related: 'Temperature, Sampling, Generation, Tokens' },
+              related: 'Temperature, Sampling, Generation, Tokens', learnMoreUrl: 'https://platform.openai.com/docs/guides/text-generation' },
 
             { number: 48, symbol: 'Attn', name: 'Attention Mechanism', category: 'concepts', row: 8, col: 6,
               definition: 'Neural network mechanism that weighs the importance of different parts of input.',
               useCases: 'Transformers, translation, focusing on relevant information.',
               features: ['Selective focus', 'Weight assignment', 'Context understanding', 'Parallelizable'],
-              related: 'Transformers, Self-attention, Query-Key-Value' },
+              related: 'Transformers, Self-attention, Query-Key-Value', learnMoreUrl: 'https://arxiv.org/abs/1706.03762' },
 
             { number: 49, symbol: 'Hall', name: 'Hallucination', category: 'concepts', row: 8, col: 7,
               definition: 'When AI models generate plausible-sounding but incorrect or fabricated information.',
               useCases: 'Quality control, fact-checking, understanding model limitations.',
               features: ['Confident errors', 'Plausible falsehoods', 'Known limitation', 'Requires mitigation'],
-              related: 'RAG, Grounding, Verification, Model Limitations' },
+              related: 'RAG, Grounding, Verification, Model Limitations', learnMoreUrl: 'https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)' },
 
             { number: 50, symbol: 'LoRA', name: 'LoRA', category: 'concepts', row: 8, col: 8,
               definition: 'Low-Rank Adaptation efficiently fine-tunes large models by training small adapter layers.',
               useCases: 'Efficient fine-tuning, parameter-efficient training, custom model adaptation.',
               features: ['Memory efficient', 'Fast training', 'Low resource requirements', 'Maintains base model'],
-              related: 'Fine-tuning, PEFT, Adapters, Efficiency' },
+              related: 'Fine-tuning, PEFT, Adapters, Efficiency', learnMoreUrl: 'https://arxiv.org/abs/2106.09685' },
 
             { number: 51, symbol: 'AGI', name: 'Artificial General', category: 'concepts', row: 8, col: 9,
               definition: 'Hypothetical AI with human-like ability to understand, learn, and apply knowledge across domains.',
               useCases: 'Future AI goal, research direction, capability benchmark.',
               features: ['General intelligence', 'Cross-domain learning', 'Human-level reasoning', 'Theoretical concept'],
-              related: 'AI Safety, Alignment, Superintelligence' },
+              related: 'AI Safety, Alignment, Superintelligence', learnMoreUrl: 'https://en.wikipedia.org/wiki/Artificial_general_intelligence' },
 
             { number: 52, symbol: 'MoE', name: 'Mixture of Experts', category: 'architectures', row: 8, col: 10,
               definition: 'Architecture using multiple specialized sub-models (experts) with a gating network.',
               useCases: 'Large-scale models, efficient inference, specialized task handling.',
               features: ['Conditional computation', 'Scalability', 'Specialized experts', 'Efficiency gains'],
-              related: 'Model Architecture, Scaling, Efficiency' },
+              related: 'Model Architecture, Scaling, Efficiency', learnMoreUrl: 'https://en.wikipedia.org/wiki/Mixture_of_experts' },
 
             { number: 53, symbol: 'SFT', name: 'Supervised Fine-tuning', category: 'training', row: 8, col: 11,
               definition: 'Fine-tuning with labeled examples to adapt model behavior to specific tasks or formats.',
               useCases: 'Task adaptation, instruction following, format learning.',
               features: ['Labeled data training', 'Behavior adaptation', 'Task-specific', 'Quality improvement'],
-              related: 'Fine-tuning, RLHF, Transfer Learning' },
+              related: 'Fine-tuning, RLHF, Transfer Learning', learnMoreUrl: 'https://huggingface.co/docs/transformers/training' },
 
             { number: 54, symbol: 'VLM', name: 'Vision-Language', category: 'models', row: 8, col: 12,
               definition: 'Models that process and understand both visual and textual information jointly.',
               useCases: 'Image captioning, visual question answering, multimodal search.',
               features: ['Multimodal understanding', 'Cross-modal learning', 'Joint representations', 'Versatile applications'],
-              related: 'Multimodal AI, CLIP, Computer Vision, NLP' }
+              related: 'Multimodal AI, CLIP, Computer Vision, NLP', learnMoreUrl: 'https://en.wikipedia.org/wiki/Multimodal_learning' }
         ];
 
         const periodicTable = document.getElementById('periodicTable');
@@ -1131,6 +1154,16 @@
             
             document.getElementById('modalRelated').textContent = element.related;
             
+            const learnMoreWrap = document.getElementById('modalLearnMoreWrap');
+            const learnMoreLink = document.getElementById('modalLearnMoreLink');
+            if (element.learnMoreUrl) {
+                learnMoreWrap.style.display = '';
+                learnMoreLink.href = element.learnMoreUrl;
+                learnMoreLink.textContent = 'Open official resource →';
+            } else {
+                learnMoreWrap.style.display = 'none';
+            }
+            
             // Show architecture diagram for this element's category
             const diagramSvg = architectureDiagrams[element.category] || '';
             modalDiagramEl.innerHTML = diagramSvg;
@@ -1184,6 +1217,7 @@
                     document.getElementById('modalUseCases').textContent = 'Click any element in the table to see details and this diagram.';
                     document.getElementById('modalFeatures').innerHTML = '<li>Category: ' + currentFilter + '</li>';
                     document.getElementById('modalRelated').textContent = 'See table elements in this category for related concepts.';
+                    document.getElementById('modalLearnMoreWrap').style.display = 'none';
                     modalDiagramEl.innerHTML = architectureDiagrams[currentFilter];
                     modal.classList.add('active');
                 }
